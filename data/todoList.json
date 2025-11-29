@@ -1,5 +1,13 @@
 [
   {
+    "id": 1,
+    "activity": "Membeli buku",
+    "status": "Finished",
+    "priority": "Low",
+    "createdAt": "2025-11-29T18:44:19.7445569+07:00",
+    "updatedAt": "0001-01-01T00:00:00Z"
+  },
+  {
     "id": 2,
     "activity": "Belajar golang",
     "status": "On Progress",
@@ -25,18 +33,10 @@
   },
   {
     "id": 5,
-    "activity": "Membeli buah naga",
+    "activity": "Membeli buah mangga",
     "status": "Finished",
     "priority": "Normal",
     "createdAt": "2025-11-29T13:54:29.0596018+07:00",
-    "updatedAt": "0001-01-01T00:00:00Z"
-  },
-  {
-    "id": 6,
-    "activity": "Membuat video golang cli",
-    "status": "On Progress",
-    "priority": "Urgent",
-    "createdAt": "2025-11-29T17:45:46.6006937+07:00",
     "updatedAt": "0001-01-01T00:00:00Z"
   }
 ]
