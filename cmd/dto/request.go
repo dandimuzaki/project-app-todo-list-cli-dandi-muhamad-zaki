@@ -15,3 +15,11 @@ type UpdateTaskRequest struct {
 func NewUpdateTaskRequest(activity, status, priority string) *UpdateTaskRequest {
 	return &UpdateTaskRequest{activity, status, priority}
 }
+
+type QueryRequest struct {
+	Keyword, Status, Priority string
+}
+
+func NewQueryRequest(keyword, status, priority string) *QueryRequest {
+	return &QueryRequest{keyword, status, priority}
+}

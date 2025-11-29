@@ -3,6 +3,7 @@ package utils
 import (
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/dandimuzaki/project-app-task-list-cli-nama/cmd/dto"
 
@@ -13,18 +14,55 @@ import (
 )
 
 func Table(data []dto.TaskResponse) {
-	// Configure colors: green headers, cyan/magenta rows, yellow footer
+	var format []dto.TaskResponse
+	for _, d := range data {
+		switch {
+		case strings.ToLower(d.Status) == "finished":
+			d.Status = "\033[32m" + d.Status
+			format = append(format, d)
+		case strings.ToLower(d.Status) == "on progress":
+			d.Status = "\033[34m" + d.Status
+			format = append(format, d)
+		case strings.ToLower(d.Status) == "on hold":
+			d.Status = "\033[33m" + d.Status
+			format = append(format, d)
+		default:
+			d.Status = "\033[37m" + d.Status
+			format = append(format, d)
+		}
+	}
+
+	var formatted []dto.TaskResponse
+	for _, d := range format {
+		switch {
+		case strings.ToLower(d.Priority) == "low":
+			d.Priority = "\033[34m" + d.Priority
+			formatted = append(formatted, d)
+		case strings.ToLower(d.Priority) == "normal":
+			d.Priority = "\033[32m" + d.Priority
+			formatted = append(formatted, d)
+		case strings.ToLower(d.Priority) == "urgent":
+			d.Priority = "\033[33m" + d.Priority
+			formatted = append(formatted, d)
+		case strings.ToLower(d.Priority) == "critical":
+			d.Priority = "\033[31m" + d.Priority
+			formatted = append(formatted, d)
+		default:
+			d.Priority = "\033[37m" + d.Priority
+			formatted = append(formatted, d)
+		}
+	}
+
 	colorCfg := renderer.ColorizedConfig{
 		Header: renderer.Tint{
 			FG: renderer.Colors{color.FgGreen, color.Bold}, // Green bold headers
 			BG: renderer.Colors{color.BgHiWhite},
 		},
 		Column: renderer.Tint{
-			FG: renderer.Colors{color.FgCyan}, // Default cyan for rows
+			FG: renderer.Colors{color.FgWhite}, // Default cyan for rows
 			Columns: []renderer.Tint{
 				{FG: renderer.Colors{color.FgMagenta}}, // Magenta for column 0
 				{},                                     // Inherit default (cyan)
-				{FG: renderer.Colors{color.FgHiRed}},   // High-intensity red for column 2
 			},
 		},
 		Footer: renderer.Tint{
@@ -48,14 +86,14 @@ func Table(data []dto.TaskResponse) {
 				ColMaxWidths: tw.CellWidth{Global: 25},
 			},
 			Footer: tw.CellConfig{
-				Alignment: tw.CellAlignment{Global: tw.AlignRight},
+				Alignment: tw.CellAlignment{PerColumn: []tw.Align{tw.AlignLeft, tw.AlignRight, tw.AlignLeft, tw.AlignLeft}},
 			},
 		}),
 	)
-
+	
 	table.Header([]string{"ID", "Activity", "Status", "Priority"})
-	table.Bulk(data)
-	table.Footer([]string{"", "Total Unfinished Task", fmt.Sprintf("%v", len(data)), ""})
+	table.Bulk(formatted)
+	table.Footer([]string{"", "", "Total", fmt.Sprintf("%v", len(format))})
 	table.Render()
 }
 

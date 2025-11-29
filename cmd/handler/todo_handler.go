@@ -7,7 +7,7 @@ import (
 )
 
 type TaskHandler interface {
-	GetAllTask() ([]dto.TaskResponse, string)
+	GetAllTask(dto.QueryRequest) ([]dto.TaskResponse, string)
 	GetTaskByID(uint) (dto.TaskResponse, string)
 	CreateTask(dto.CreateTaskRequest) (dto.MessageResponse)
 	UpdateTask(uint, dto.UpdateTaskRequest) (dto.MessageResponse)
@@ -34,8 +34,8 @@ func (h *taskHandler) CreateTask(req dto.CreateTaskRequest) (res dto.MessageResp
 	return res
 }
 
-func (h *taskHandler) GetAllTask() ([]dto.TaskResponse, string) {
-	todoList, err := h.service.GetAllTask()
+func (h *taskHandler) GetAllTask(q dto.QueryRequest) ([]dto.TaskResponse, string) {
+	todoList, err := h.service.GetAllTask(q)
 	if err != nil {
 		return []dto.TaskResponse{}, utils.ErrorMessage(err)
 	} else {

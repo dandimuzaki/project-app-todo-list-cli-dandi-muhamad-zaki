@@ -12,7 +12,7 @@ import (
 
 type TaskService interface {
 	CreateTask(dto.CreateTaskRequest) (model.Task, error)
-	GetAllTask() ([]model.Task, error)
+	GetAllTask(dto.QueryRequest) ([]model.Task, error)
 	GetTaskByID(uint) (*model.Task, error)
 	UpdateTask(uint, dto.UpdateTaskRequest) (model.Task, error)
 	DeleteTask(id uint) error
@@ -47,9 +47,9 @@ func (s *taskService) CreateTask(req dto.CreateTaskRequest) (model.Task, error) 
 	
 	newTask := model.Task{
 		ID: newID,
-		Activity: req.Activity,
+		Activity: utils.Capitalize(req.Activity),
 		Status: "On Progress",
-		Priority: req.Priority,
+		Priority: utils.Uppercase(req.Priority),
 		CreatedAt: time.Now(),
 	}
 
@@ -63,10 +63,35 @@ func (s *taskService) CreateTask(req dto.CreateTaskRequest) (model.Task, error) 
 }
 
 
-func (s *taskService) GetAllTask() ([]model.Task, error) {
+func (s *taskService) GetAllTask(q dto.QueryRequest) ([]model.Task, error) {
 	todoList, err := utils.ReadTodoFromFile()
 	if err != nil {
 		return []model.Task{}, err
+	}
+	var filtered []model.Task
+	if q.Keyword != "" {
+		for _, t := range todoList {
+			if strings.Contains(strings.ToLower(t.Activity), strings.ToLower(q.Keyword)) {
+				filtered = append(filtered, t)
+			}
+		}
+		return filtered, nil
+	}
+	if q.Status != "" {
+		for _, t := range todoList {
+			if strings.Contains(strings.ToLower(t.Status), strings.ToLower(q.Status)) {
+				filtered = append(filtered, t)
+			}
+		}
+		return filtered, nil
+	}
+	if q.Priority != "" {
+		for _, t := range todoList {
+			if strings.Contains(strings.ToLower(t.Priority), strings.ToLower(q.Priority)) {
+				filtered = append(filtered, t)
+			}
+		}
+		return filtered, nil
 	}
 	return todoList, nil
 }
@@ -107,13 +132,13 @@ func (s *taskService) UpdateTask(id uint, req dto.UpdateTaskRequest) (model.Task
 
 	if task != (model.Task{}) {
 		if req.Activity != "" {
-			task.Activity = req.Activity
+			task.Activity = utils.Capitalize(req.Activity)
 		}
 		if req.Priority != "" {
-			task.Priority = req.Priority
+			task.Priority = utils.Uppercase(req.Priority)
 		}
 		if req.Status != "" {
-			task.Status = req.Status
+			task.Status = utils.Uppercase(req.Status)
 		}
 	}
 

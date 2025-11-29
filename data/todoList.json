@@ -1,15 +1,7 @@
 [
   {
-    "id": 1,
-    "activity": "Membeli buku",
-    "status": "On Progress",
-    "priority": "Urgent",
-    "createdAt": "2025-11-29T09:35:57.652935+07:00",
-    "updatedAt": "0001-01-01T00:00:00Z"
-  },
-  {
     "id": 2,
-    "activity": "Membeli buku",
+    "activity": "Belajar golang",
     "status": "On Progress",
     "priority": "Urgent",
     "createdAt": "2025-11-29T09:43:08.398992+07:00",
@@ -17,18 +9,34 @@
   },
   {
     "id": 3,
-    "activity": "Membeli buku",
+    "activity": "Mengumpulkan tugas golang CLI",
     "status": "On Progress",
-    "priority": "Urgent",
+    "priority": "Critical",
     "createdAt": "2025-11-29T09:46:54.4358044+07:00",
     "updatedAt": "0001-01-01T00:00:00Z"
   },
   {
     "id": 4,
-    "activity": "Membeli buku",
+    "activity": "Mengerjakan challenge tentang user login",
+    "status": "On Progress",
+    "priority": "Critical",
+    "createdAt": "2025-11-29T09:48:12.6353159+07:00",
+    "updatedAt": "0001-01-01T00:00:00Z"
+  },
+  {
+    "id": 5,
+    "activity": "Membeli buah naga",
+    "status": "Finished",
+    "priority": "Normal",
+    "createdAt": "2025-11-29T13:54:29.0596018+07:00",
+    "updatedAt": "0001-01-01T00:00:00Z"
+  },
+  {
+    "id": 6,
+    "activity": "Membuat video golang cli",
     "status": "On Progress",
     "priority": "Urgent",
-    "createdAt": "2025-11-29T09:48:12.6353159+07:00",
+    "createdAt": "2025-11-29T17:45:46.6006937+07:00",
     "updatedAt": "0001-01-01T00:00:00Z"
   }
 ]

@@ -1,14 +1,50 @@
 package utils
 
 import (
-	"errors"
-	"time"
+	"strings"
 )
 
-func StringToDatetime(s string) (time.Time, error) {
-	resDate, err := time.Parse("2006-01-02", s)
-	if err != nil {
-		return time.Now(), errors.New("invalid date format. use YYYY-MM-DD")
+func Uppercase(s string) string {
+	words := strings.Split(s, " ")
+	var capitalized []string
+	for _, w := range words {
+		newWord := strings.ToUpper(string(w[0])) + w[1:]
+		capitalized = append(capitalized, newWord)
 	}
-	return resDate, nil
+	return strings.Join(capitalized, " ")
+}
+
+func Capitalize(s string) string {
+	return strings.ToUpper(string(s[0])) + s[1:]
+}
+
+func IsValidStatus(s string) bool {
+	valid := false
+	if strings.ToLower(s) == "on progress" {
+		valid = true
+	}
+	if strings.ToLower(s) == "on hold" {
+		valid = true
+	}
+	if strings.ToLower(s) == "finished" {
+		valid = true
+	}
+	return valid
+}
+
+func IsValidPriority(s string) bool {
+	valid := false
+	if strings.ToLower(s) == "low" {
+		valid = true
+	}
+	if strings.ToLower(s) == "normal" {
+		valid = true
+	}
+	if strings.ToLower(s) == "urgent" {
+		valid = true
+	}
+	if strings.ToLower(s) == "critical" {
+		valid = true
+	}
+	return valid
 }
